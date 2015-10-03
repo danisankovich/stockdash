@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel='stylesheet' href='/stylesheets/css/foundation.min.css' />
+  <link rel='stylesheet' href='/stylesheets/css/normalize.css' />
+  <link rel='stylesheet' href='/stylesheets/sweetalert-master/dist/sweetalert.css' />
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StockDash</title>
+</head>
+<body ng-app="StockDash">
+
+
+  <nav class="top-bar" data-topbar role="navigation">
+  <ul class="title-area">
+    <li class="name">
+      <h1><a ui-sref="/" class="navbar-brand" href="#">StockDash</a></h1>
+    </li>
+     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+  </ul>
+
+  <section class="top-bar-section">
+    <!-- Right Nav Section -->
+    <ul class="nav navbar-nav navbar-right right">
+      <% if (user) { %>
+      <li><a ui-sref="dashboard">Dashboard</a></li>
+      <li><a ui-sref="search">Find Stocks</a></li>
+      <!-- <li><a ui-sref="history">History</a></li> -->
+      <% } else { %>
+      <% } %>
+      <li><a ui-sref="news">News</a></li>
+      <% if (user) { %>
+      <li><a href='/logout'>Logout <span class="glyphicon glyphicon-log-in"></span></a></li>
+      <% } else { %>
+      <li><a href='/auth/google' class="googleplus">Log in with Google</i></a></li>
+      <% } %>
+    </ul>
+
+  </section>
+</nav>
+
+  <div class="container">
+    <div ui-view></div>
+  </div>
+  <script src="/javascripts/js/vendor/jquery.js"></script>
+  <script src="/javascripts/js/vendor/modernizr.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+  <script src="/stylesheets/sweetalert-master/dist/sweetalert.min.js"></script>
+  <script src="/javascripts/js/foundation.min.js"></script>
+  <script src="/javascripts/main.js"></script>
+</body>
+</html>

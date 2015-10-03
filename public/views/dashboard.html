@@ -1,0 +1,71 @@
+
+<h1>make it a table layout. Anything on the markit api will only get called on a button, otherwise API will block you.</h1>
+<div class="container">
+  <div class="row">
+    <div class="large-12 small-12 medium-12 columns">
+      <div class="large-8 small-8 medium-8 columns">
+        <h1>{{currentUser}}'s Dashboard</h1>
+      </div>
+      <div class="large-10 small-10 large-offset-1 small-offset-1 columns">
+        <p>Click on the + below to expand information of a particular stock. You can edit or delete
+          any information from there.</p>
+        </div>
+        <div class="small-6 large-6 columns">
+          <h1>owned</h1>
+          <div ng-repeat="stock in portfolio" ng-show="{{stock.owned}}">
+            <div class="panel">
+            <ul>
+              <li>Name: {{stock.name}}</li><br>
+              <li>Symbol: {{stock.symbol}}</li><br>
+              <li>Price At Purchase: ${{stock.PAP}}</li><br>
+              <li>Shares Owned: ${{stock.shares}}</li><br>
+              <li>Desired Sell Price: ${{stock.target}}</li><br>
+              <li>Current Price: ${{stock.currentPrice}}</li>
+            </ul>
+            </div>
+          </div>
+        </div>
+        <div class="small-6 large-6 columns">
+          <h1>Tracked</h1>
+          <div ng-repeat="stock in portfolio" ng-hide="{{stock.owned}}">
+            <div class="panel">
+            <ul>
+              <li>Name: {{stock.name}}</li><br>
+              <li>Symbol: {{stock.symbol}}</li><br>
+              <li>Price At Purchase: ${{stock.PAP}}</li><br>
+              <li>Desired Buy Price: ${{stock.target}}</li><br>
+              <li>Current Price: ${{stock.currentPrice}}</li>
+            </ul>
+          </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard: As a user I can see all of the stocks that I have saved
+  Of the stocks that I have saved I see two categories, based on
+  what I specified: "owned" and "tracked."
+  Owned: I have purchased shares in this company. I can see the price that I bought them at,
+  I can see the current price, the amount of shares I own, as well as a graph of prices over the last year. I also see
+  the value at which I wish to sell, which, if the price reaches, I will get a notification, and
+  the stock will be highlighted and labelled: "Target Reached"
+  Tracked: I have not purchased shares, but I wish to keep track of a company. I see all of the same information as in the owned category,
+  but instead of number of shares and price at purchase, I see price at addition. When this reaches a target point, it will be highlighted a different
+  color and labelled: "Tracked: Target reached"
+
+
+  Target prices: when a stock is added, one of the parameters is "Target": this will either be a flat number, or a percentage (not sure yet).
+  If the price of the stock reaches that target, the user will get a notification via email that the stock has reached such a point, and on
+  the dashboard the stock will move to a specific subcategory, depending on whether the user wishes to now purchase or sell.
+
+  Every day (if they choose) the user will get a notification via email about articles concerning companies that they are tracking/have shares in.
+  How this will be controlled TBD. For the time being, they will simply receive an email that contains one article for each company on their dashboard.
+
+  Users will also be able to log in with other oauth procedures, and their oauths can be linked so that they do not have to sign in with the same
+  strategy every time.
+
+  The news section will have relevant headlines for general market information and for learning about the market, but users can search for anything
+  specific that they like.
+-->

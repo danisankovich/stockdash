@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row">
+    <div class="large-12 small-12 medium-12 columns">
+      <div class="large-8 small-8 columns">
+        <div>
+          <p>Search for stock information by name or symbol.</p>
+        </div>
+        <form ng-submit="findBySymbol()">
+          <input type="text" ng-model="symbol" placeholder="Enter Symbol or Company Name"/>
+          <input type="submit"/>
+        </form>
+      </div>
+    </div>
+    <div class="large-12 small-12 medium-12 columns">
+      <div class="large-8 small-8 medium-8 columns">
+        <ul ng-show="(shown)">
+          <li>Symbol: {{stockInfo[0].Symbol}}</li><br>
+          <li>Company Name: {{stockInfo[0].Name}}</li><br>
+          <li>Exchange: {{stockInfo[0].Exchange}}</li><br>
+          <li>Open Price: ${{stockData.Open}}</li><br>
+          <li>Last Price: ${{stockData.LastPrice}}</li><br>
+          <li>Change: ${{stockData.Change}}</li><br>
+          <li>Change Percent: %{{stockData.ChangePercent}}</li><br>
+          <li>Change Percent YTD: %{{stockData.ChangePercentYTD}}</li><br>
+          <li>Today's High: ${{stockData.High}}</li><br>
+          <li>Today's Low: ${{stockData.Low}}</li><br>
+          <li>Market Cap: ${{stockData.MarketCap}}</li><br>
+          <li>Volume: {{stockData.Volume}}</li><br>
+          <li><button class="button small" ng-click="openForm()">Save Stock</button></li>
+        </ul>
+      </div>
+      <div class="large-4 small-4 columns">
+        <form ng-submit="addStock()" ng-show="showForm">
+          <input name="Name" ng-model="stock.Name" value="{{stock.Name}}" readonly>
+          <input name="symbol" ng-model="stock.symbol" value="{{stock.symbol}}" readonly>
+          <input name="PAP" ng-model="stock.PAP" value="{{stock.PAP}}" readonly>
+          <input type="number" name="target" placeholder="target price" ng-model="stock.target">
+          <label for="owned">Do you own shares in this stock?</label>
+          <input id="shares_owned_true" type="radio" name="owned" ng-model="stock.owned" value="true">Yes
+          <input id="shares_owned_false" type="radio" name="owned" ng-model="stock.owned" value="false" checked="checked">No
+          <input id="shares_owned" type="number" name="shares" placeholder="shares owned" ng-model="stock.shares" disabled>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
