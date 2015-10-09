@@ -4,8 +4,10 @@ var mongoose = require('mongoose');
 var logout = require('express-passport-logout');
 var User = require('../models/user');
 var Stock = require('../models/stock');
+var Crud = require('../models/crud');
 
-mongoose.connect('mongodb://localhost/stockdash2');
+// mongoose.connect('mongodb://localhost/stock-dash');
+mongoose.connect('mongodb://localhost/sanky');
 
 router.get('/', function (req, res, next) {
   res.render('index', {user: req.user});
@@ -34,15 +36,31 @@ router.post('/search', function(req, res, next) {
       if (stock) {
         user.portfolio.push(stock);
         user.save();
+        res.send();
       }
-      res.send();
     });
   });
 });
 
 router.get('/dashboard', function(req, res, next) {
-  User.findById(req.user._id).populate('portfolio').exec(function(err, user) {
-    res.json(req.user);
+  User.findById(req.user._id, function(err, user) {
+    res.send(req.user);
+  });
+});
+
+router.put('/stock/update', function(req, res, next) {
+  Stock.update(
+    {key1: "useless string"},
+    {$set: {key2: req.body.key2,
+            key3: req.body.key3}},
+    {upsert: true}, function(err, stock) {
+    res.send(stock);
+  });
+});
+
+router.delete('/stock/delete/:id', function(req, res, next) {
+  Stock.remove({"_id": req.params.id}, function(err, stock){
+    res.send(stock);
   });
 });
 

@@ -6,6 +6,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   .state('/', {
     url: '/',
     templateUrl: 'views/home.html',
+    controller: 'dashboardCtrl'
   })
   .state('dashboard', {
     url: '/dashboard',
