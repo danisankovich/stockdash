@@ -3,26 +3,19 @@ var app = angular.module('StockDash', ['ui.router']);
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
   $stateProvider
-  .state('/', {
-    url: '/',
-    templateUrl: 'views/home.html',
-    controller: 'dashboardCtrl'
-  })
-  .state('dashboard', {
-    url: '/dashboard',
-    templateUrl: 'views/dashboard.html',
-    controller: 'dashboardCtrl'
-  })
-  .state('news', {
-    url: '/news',
-    templateUrl: 'views/news.html'
-  })
-  .state('search', {
-    url: '/search',
-    templateUrl: 'views/search.html',
-    controller: 'searchCtrl'
-  });
+  .state('/', { url: '/', templateUrl: 'views/home.html', controller: 'mainCtrl' })
+  .state('dashboard', { url: '/dashboard', templateUrl: 'views/dashboard.html', controller: 'dashboardCtrl' })
+  .state('news', { url: '/news', templateUrl: 'views/news.html' })
+  .state('search', { url: '/search', templateUrl: 'views/search.html', controller: 'searchCtrl' });
 }]);
+
+app.controller('mainCtrl', function($scope, $state, $http, stockInfoService){
+  $scope.portfolio='';
+  return $http.get('http://localhost:3000/search').success(function(user) {
+    console.log("user", user);
+    $scope.currentUser = user.displayName;
+  });
+});
 
 app.controller('dashboardCtrl', function($scope, $state, $http, stockInfoService, $timeout){
   $scope.portfolio='';

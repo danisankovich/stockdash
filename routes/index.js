@@ -6,8 +6,8 @@ var User = require('../models/user');
 var Stock = require('../models/stock');
 var Crud = require('../models/crud');
 
-// mongoose.connect('mongodb://localhost/stock-dash');
-mongoose.connect('mongodb://localhost/sanky');
+mongoose.connect('mongodb://localhost/stock-dash');
+// mongoose.connect('mongodb://localhost/sanky');
 
 router.get('/', function (req, res, next) {
   res.render('index', {user: req.user});
