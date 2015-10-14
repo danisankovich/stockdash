@@ -23,42 +23,18 @@ app.controller('dashboardCtrl', function($scope, $state, $http, stockInfoService
     console.log("user", user);
     $scope.currentUser = user.displayName;
     $scope.portfolio = user.portfolio;
-    $scope.currentPrice='';
-  }).success(function(){
-    for(var i=0; i< $scope.portfolio.length; i++) {
-      var cp = [];
-      $http.jsonp("http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol=" + $scope.portfolio[i].symbol + "&callback=JSON_CALLBACK")
-      .success(function(data) {
-        cp.push({currentPrice: data.LastPrice, name: data.Name});
-      });
-    };
-    return $scope.currentPrice = cp;
+    // $scope.currentPrice='';
   });
-  $timeout(function() {
-    portfolio = $scope.portfolio.sort(function(a, b) {
-      if (a.name > b.name) {
-        return 1;
-      }
-      if (a.name < b.name) {
-        return -1;
-      }
-      return 0;
-    });
-    currentPrice = $scope.currentPrice.sort(function(a, b) {
-      if (a.name > b.name) {
-        return 1;
-      }
-      if (a.name < b.name) {
-        return -1;
-      }
-      return 0;
-    });
-    for(var j = 0; j<portfolio.length; j++) {
-      portfolio[j].currentPrice = currentPrice[j].currentPrice;
-      console.log(portfolio[j].currentPrice);
-    }
-    $scope.portfolio = portfolio;
-  }, 600);
+  // .success(function(){
+  //   for(var i=0; i< $scope.portfolio.length; i++) {
+  //     var cp = [];
+  //     $http.jsonp("http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol=" + $scope.portfolio[i].symbol + "&callback=JSON_CALLBACK")
+  //     .success(function(data) {
+  //       cp.push({currentPrice: data.LastPrice, name: data.Name});
+  //     });
+  //   };
+  //   return $scope.currentPrice = cp;
+  // });
 });
 
 app.controller('aboutCtrl', function($scope, $state){
