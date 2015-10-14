@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var logout = require('express-passport-logout');
 var User = require('../models/user');
 var Stock = require('../models/stock');
-var Crud = require('../models/crud');
+var Budget = require('../models/budget');
 
 mongoose.connect('mongodb://localhost/stock-dash');
 // mongoose.connect('mongodb://localhost/sanky');
@@ -45,6 +45,25 @@ router.post('/search', function(req, res, next) {
 router.get('/dashboard', function(req, res, next) {
   User.findById(req.user._id, function(err, user) {
     res.send(req.user);
+  });
+});
+
+router.get('/budget', function(req, res, next) {
+  Budget.find({userId: req.user._id}, function(err, budget) {
+    res.send(req.budget);
+  });
+});
+
+router.post('/budget', function(req, res, next) {
+  User.findOne({displayName: 'Michael Sankovich'}, function(err, user) {
+    var budget = new Budget({
+      userId: user._id,
+      name: req.body.name,
+      monthlyPrice: req.body.monthlyPrice,
+      necessityLevel: req.body.necessityLevel,
+    });
+    budget.save();
+    res.send();
   });
 });
 

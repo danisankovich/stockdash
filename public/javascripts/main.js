@@ -6,7 +6,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   .state('/', { url: '/', templateUrl: 'views/home.html', controller: 'mainCtrl' })
   .state('dashboard', { url: '/dashboard', templateUrl: 'views/dashboard.html', controller: 'dashboardCtrl' })
   .state('news', { url: '/news', templateUrl: 'views/news.html' })
-  .state('search', { url: '/search', templateUrl: 'views/search.html', controller: 'searchCtrl' });
+  .state('search', { url: '/search', templateUrl: 'views/search.html', controller: 'searchCtrl' })
+  .state('budget', { url: '/budget', templateUrl: 'views/budget.html', controller: 'budgetCtrl' });
 }]);
 
 app.controller('mainCtrl', function($scope, $state, $http, stockInfoService){
@@ -27,24 +28,24 @@ app.controller('dashboardCtrl', function($scope, $state, $http, stockInfoService
   });
   $scope.showStockInfo = function() {
     console.log(this.stock);
+    $http.jsonp("http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol=" + this.stock.symbol + "&callback=JSON_CALLBACK")
+    .success(function(data) {
+      $scope.currentPrice = data.LastPrice;
+    });
   };
-  // .success(function(){
-  //   for(var i=0; i< $scope.portfolio.length; i++) {
-  //     var cp = [];
-  //     $http.jsonp("http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol=" + $scope.portfolio[i].symbol + "&callback=JSON_CALLBACK")
-  //     .success(function(data) {
-  //       cp.push({currentPrice: data.LastPrice, name: data.Name});
-  //     });
-  //   };
-  //   return $scope.currentPrice = cp;
-  // });
 });
 
-app.controller('aboutCtrl', function($scope, $state){
+app.controller('aboutCtrl', function($scope, $state, $http){
   return $http.get('http://localhost:3000/search').success(function(user) {
     console.log("user", user);
     $scope.currentUser = user.displayName;
-    $scope.stocks=$scope.currentuser.portfolio;
+  });
+});
+
+app.controller('budgetCtrl', function($scope, $state, $http){
+  return $http.get('http://localhost:3000/budget').success(function(user) {
+    console.log("user", user);
+    $scope.currentUser = user.displayName;
   });
 });
 
@@ -122,11 +123,5 @@ app.service('stockInfoService', function($http, $stateParams, $state) {
   };
 });
 
-// Lookup by symbol:
-// "http://dev.markitondemand.com/Api/v2/InteractiveChart/json?parameters=%7B%22Normalized%22%3Afalse%2C%22NumberOfDays%22%3A365%2C%22DataPeriod%22%3A%22Day%22%2C%22Elements%22%3A%5B%7B%22Symbol%22%3A%22"+symbol+"%22%2C%22Type%22%3A%22price%22%2C%22Params%22%3A%5B%22c%22%5D%7D%5D%7D";
-
 // lookup by ticker or name: probably have to use %20 or whatever for multi-word companies
 // "http://dev.markitondemand.com/Api/v2/Lookup/jsonp?input="+company ticker or name+"&callback=myFunction"
-
-// for current value
-//"http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol="+ticker+"&callback=myFunction"
