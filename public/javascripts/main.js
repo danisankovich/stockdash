@@ -42,11 +42,46 @@ app.controller('aboutCtrl', function($scope, $state, $http){
   });
 });
 
-app.controller('budgetCtrl', function($scope, $state, $http){
-  return $http.get('http://localhost:3000/budget').success(function(user) {
+app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
+  var matchName;
+
+  $(document).foundation();
+
+  //  $scope.editId='';
+
+  $http.get('http://localhost:3000/budget').success(function(budget) {
+    console.log("budget", budget);
+    $scope.budgets = budget;
+  });
+
+  $http.get('http://localhost:3000/user').success(function(user) {
     console.log("user", user);
     $scope.currentUser = user.displayName;
   });
+
+  $scope.addBudget = function() {
+    addStockService.addBudget($scope.budget);
+  };
+
+  $scope.openEdit = function() {
+    $scope.budgetName = this.budget.name;
+    $scope.monthlyPrice = this.budget.monthlyPrice;
+    $scope.necessityLevel = this.budget.necessityLevel;
+    matchName = this.budget.budgetName;
+  };
+
+  $scope.editBudget = function(budget) {
+      $http.put('/budget/' + matchName, budget)
+      .success(function(response) {
+        if (response === 'fail'){
+          alert('Fail to edit ', 'Make sure year format is correct', 'error');
+        } else {
+          alert('Success', 'info updated.', 'success');
+        }
+      }).catch(function(err) {
+        console.log(err);
+      });
+    };
 });
 
 app.controller('searchCtrl', function($scope, $state, $http, addStockService){
@@ -116,12 +151,23 @@ app.service('addStockService', function($http, $stateParams, $state) {
       console.log(err);
     });
   };
+  this.addBudget = function(budget) {
+    $http.post('/budget', budget)
+    .success(function(response) {
+      if (response === 'fail') {
+        alert('Fail to add Stock. ');
+      } else {
+        alert('Successfully added stock');
+      }
+    }).catch(function(err) {
+      console.log(err);
+    });
+  };
 });
 app.service('stockInfoService', function($http, $stateParams, $state) {
   this.stockInfo=function() {
     $http.jsonp("http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol="+$scope.stockInfo[0].Symbol+"&callback=JSON_CALLBACK");
   };
 });
-
 // lookup by ticker or name: probably have to use %20 or whatever for multi-word companies
 // "http://dev.markitondemand.com/Api/v2/Lookup/jsonp?input="+company ticker or name+"&callback=myFunction"

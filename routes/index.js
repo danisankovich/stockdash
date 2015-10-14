@@ -20,6 +20,12 @@ router.get('/search', function(req, res, next) {
   });
 });
 
+router.get('/user', function(req, res, next) {
+  User.findById(req.user._id, function(err, user) {
+    res.json(req.user);
+  });
+});
+
 router.post('/search', function(req, res, next) {
   User.findById(req.user._id, function(err, user){
     Stock.create({
@@ -50,21 +56,46 @@ router.get('/dashboard', function(req, res, next) {
 
 router.get('/budget', function(req, res, next) {
   Budget.find({userId: req.user._id}, function(err, budget) {
-    res.send(req.budget);
+    res.send(budget);
   });
 });
 
+
 router.post('/budget', function(req, res, next) {
-  User.findOne({displayName: 'Michael Sankovich'}, function(err, user) {
-    var budget = new Budget({
-      userId: user._id,
-      name: req.body.name,
+  User.findById("560791eb04972cda27e66cb7", function(err, user){
+    Budget.create({
+      userId: "560791eb04972cda27e66cb7",
+      budgetName: req.body.budgetName,
       monthlyPrice: req.body.monthlyPrice,
       necessityLevel: req.body.necessityLevel,
+    }, function(err, budget){
+      // console.log(user);
+      if (!budget) {
+        res.send('fail');
+      }
+      if (budget) {
+        // console.log(user);
+        user.budgets.push(budget);
+        user.save();
+        res.send();
+      }
     });
-    budget.save();
-    res.send();
   });
+});
+
+
+
+router.put('/budget/:id', function(req, res, next) {
+  console.log(req.params.id);
+  console.log(req.body);
+  Budget.update({budgetName: req.params.id},
+    {
+      budgetName: req.body.budgetName,
+      monthlyPrice: req.body.monthlyPrice,
+      necessityLevel: req.body.necessityLevel
+    }, {upsert: true}, function(err, saved) {
+      res.send(saved);
+    });
 });
 
 router.put('/stock/update', function(req, res, next) {

@@ -1,1 +1,44 @@
-{{currentUser}}
+<h1>{{currentUser}}'s Budget</h1>
+
+<div class="row">
+  <div class="small-12 columns">
+    <div class="small-6 large-6 columns">
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Monthly Cost</th>
+          <th>Necessity</th>
+          <th>Edit</th>
+        </tr>
+        <tr ng-repeat="budget in budgets">
+          <td>{{budget.budgetName}}</td>
+          <td>${{budget.monthlyPrice}}</td>
+          <td>{{budget.necessityLevel}}</td>
+          <td><a href="#" data-reveal-id="budgetEditModal" ng-click="openEdit()">Edit</a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="large-4 small-4 columns">
+  <form ng-submit="addBudget()">
+    <input name="budgetName" ng-model="budget.budgetName" type = "text">
+    <input name="monthlyPrice" ng-model="budget.monthlyPrice" type="number">
+    <input name="necessityLevel" ng-model="budget.necessityLevel" type="number">
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<div id="budgetEditModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <h2 id="modalTitle">Edit Your Budget</h2>
+  <form ng-submit="editBudget(budget)">
+    <input name="budgetName" ng-model="budget.budgetName" type = "text">
+    <input name="monthlyPrice" ng-model="budget.monthlyPrice" type="number">
+    <input name="necessityLevel" ng-model="budget.necessityLevel" type="number">
+    <button type="submit">Submit</button>
+  </form>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+
+ <!-- ng-click="editBudget()" -->
