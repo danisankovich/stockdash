@@ -169,9 +169,9 @@ app.service('addStockService', function($http, $stateParams, $state) {
     $http.post('/budget', budget)
     .success(function(response) {
       if (response === 'fail') {
-        alert('Fail to add Stock. ');
+        alert('Fail to add budget item. ');
       } else {
-        alert('Successfully added stock');
+        alert('Successfully added budget item');
       }
     }).catch(function(err) {
       console.log(err);

@@ -69,14 +69,10 @@ router.post('/budget', function(req, res, next) {
       monthlyPrice: req.body.monthlyPrice,
       necessityLevel: req.body.necessityLevel,
     }, function(err, budget){
-      // console.log(user);
       if (!budget) {
         res.send('fail');
       }
       if (budget) {
-        // console.log(user);
-        user.budgets.push(budget);
-        user.save();
         res.send();
       }
     });
