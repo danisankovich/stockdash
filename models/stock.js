@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var stock = new mongoose.Schema({
+  userId: String,
   name: String,
   symbol: String,
   PAP: String,

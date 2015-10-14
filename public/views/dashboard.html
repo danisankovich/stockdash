@@ -21,7 +21,7 @@
             <th>Price At Purchase</th>
             <th>Shares Owned</th>
           </tr>
-          <tr ng-repeat="stock in portfolio" ng-show="{{stock.owned}}" ng-click="showStockInfo()">
+          <tr ng-repeat="stock in stocks" ng-show="{{stock.owned}}" ng-click="showStockInfo()">
             <td>{{stock.name}}</td>
             <td>{{stock.symbol}}</td>
             <td>${{stock.PAP}}</td>
@@ -39,7 +39,7 @@
             <th>Symbol</th>
             <th>Price At Addition</th>
           </tr>
-          <tr ng-repeat="stock in portfolio" ng-hide="{{stock.owned}}" ng-click="showStockInfo()">
+          <tr ng-repeat="stock in stocks" ng-hide="{{stock.owned}}" ng-click="showStockInfo()">
             <td>{{stock.name}}</td>
             <td>{{stock.symbol}}</td>
             <td>${{stock.PAP}}</td>

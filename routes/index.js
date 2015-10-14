@@ -29,6 +29,7 @@ router.get('/user', function(req, res, next) {
 router.post('/search', function(req, res, next) {
   User.findById(req.user._id, function(err, user){
     Stock.create({
+      userId: req.user._id,
       name: req.body.Name,
       symbol: req.body.symbol,
       PAP: req.body.PAP,
@@ -40,8 +41,6 @@ router.post('/search', function(req, res, next) {
         res.send('fail');
       }
       if (stock) {
-        user.portfolio.push(stock);
-        user.save();
         res.send();
       }
     });
@@ -49,8 +48,8 @@ router.post('/search', function(req, res, next) {
 });
 
 router.get('/dashboard', function(req, res, next) {
-  User.findById(req.user._id, function(err, user) {
-    res.send(req.user);
+  Stock.find({userId: req.user._id}, function(err, stocks) {
+    res.send(stocks);
   });
 });
 
@@ -62,9 +61,9 @@ router.get('/budget', function(req, res, next) {
 
 
 router.post('/budget', function(req, res, next) {
-  User.findById("560791eb04972cda27e66cb7", function(err, user){
+  User.findById(req.user._id, function(err, user){
     Budget.create({
-      userId: "560791eb04972cda27e66cb7",
+      userId: req.user._id,
       budgetName: req.body.budgetName,
       monthlyPrice: req.body.monthlyPrice,
       necessityLevel: req.body.necessityLevel,

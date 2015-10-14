@@ -19,11 +19,17 @@ app.controller('mainCtrl', function($scope, $state, $http, stockInfoService){
 });
 
 app.controller('dashboardCtrl', function($scope, $state, $http, stockInfoService, $timeout){
-  $scope.portfolio='';
-  $http.get('http://localhost:3000/dashboard').success(function(user) {
+  $scope.stocks='';
+
+  $http.get('http://localhost:3000/user').success(function(user) {
     console.log("user", user);
     $scope.currentUser = user.displayName;
-    $scope.portfolio = user.portfolio;
+  });
+
+  $http.get('http://localhost:3000/dashboard').success(function(stocks) {
+    console.log("stocks", stocks);
+    // $scope.currentUser = user.displayName;
+    $scope.stocks = stocks;
     // $scope.currentPrice='';
   });
   $scope.showStockInfo = function() {
