@@ -25,6 +25,9 @@ app.controller('dashboardCtrl', function($scope, $state, $http, stockInfoService
     $scope.portfolio = user.portfolio;
     // $scope.currentPrice='';
   });
+  $scope.showStockInfo = function() {
+    console.log(this.stock);
+  };
   // .success(function(){
   //   for(var i=0; i< $scope.portfolio.length; i++) {
   //     var cp = [];
