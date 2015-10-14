@@ -67,16 +67,30 @@ app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
     $scope.budgetName = this.budget.name;
     $scope.monthlyPrice = this.budget.monthlyPrice;
     $scope.necessityLevel = this.budget.necessityLevel;
-    matchName = this.budget.budgetName;
+    matchId = this.budget._id;
   };
 
   $scope.editBudget = function(budget) {
-      $http.put('/budget/' + matchName, budget)
+      $http.put('/budget/' + matchId, budget)
       .success(function(response) {
         if (response === 'fail'){
           alert('Fail to edit ', 'Make sure year format is correct', 'error');
         } else {
           alert('Success', 'info updated.', 'success');
+        }
+      }).catch(function(err) {
+        console.log(err);
+      });
+    };
+
+  $scope.deleteBudget = function(budget) {
+      matchId = this.budget._id;
+      $http.delete('/budget/' + matchId, budget)
+      .success(function(response) {
+        if (response === 'fail'){
+          alert('Fail to delete ', 'Please Try Again', 'error');
+        } else {
+          alert('Success', 'info deleted.', 'success');
         }
       }).catch(function(err) {
         console.log(err);

@@ -83,12 +83,8 @@ router.post('/budget', function(req, res, next) {
   });
 });
 
-
-
 router.put('/budget/:id', function(req, res, next) {
-  console.log(req.params.id);
-  console.log(req.body);
-  Budget.update({budgetName: req.params.id},
+  Budget.findByIdAndUpdate(req.params.id,
     {
       budgetName: req.body.budgetName,
       monthlyPrice: req.body.monthlyPrice,
@@ -96,6 +92,12 @@ router.put('/budget/:id', function(req, res, next) {
     }, {upsert: true}, function(err, saved) {
       res.send(saved);
     });
+});
+
+router.delete('/budget/:id', function(req, res, next) {
+  Budget.findByIdAndRemove(req.params.id, function(err, saved) {
+    res.send();
+  });
 });
 
 router.put('/stock/update', function(req, res, next) {

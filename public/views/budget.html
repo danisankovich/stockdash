@@ -9,12 +9,14 @@
           <th>Monthly Cost</th>
           <th>Necessity</th>
           <th>Edit</th>
+          <th>Delete</th>
         </tr>
         <tr ng-repeat="budget in budgets">
           <td>{{budget.budgetName}}</td>
           <td>${{budget.monthlyPrice}}</td>
           <td>{{budget.necessityLevel}}</td>
           <td><a href="#" data-reveal-id="budgetEditModal" ng-click="openEdit()">Edit</a></td>
+          <td><button ng-click="deleteBudget()">Delete</button></td>
         </tr>
       </table>
     </div>
