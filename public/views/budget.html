@@ -18,7 +18,28 @@
           <td><a href="#" data-reveal-id="budgetEditModal" ng-click="openEdit()">Edit</a></td>
           <td><button ng-click="deleteBudget()">Delete</button></td>
         </tr>
+        <tr>
+          <th>Calculations</th>
+          <th>Total Expenses</th>
+          <th>Left Over</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <td>{{Calculation}}</td>
+          <td>{{expenses}}</td>
+          <td>{{left over}}</td>
+          <td></td>
+          <td></td>
+        </tr>
       </table>
+    </div>
+    <div class="small-6 large-6 columns">
+      <div class="box">
+        <h2>Monthly Salary: {{income}}</h2>
+        <h2>Monthly Takehome: {{Takehome}}</h2>
+        <h2>Remaining after Budget considerations: {{After considerations}}</h2>
+      </div>
     </div>
   </div>
 </div>
@@ -30,6 +51,11 @@
     <input name="necessityLevel" ng-model="budget.necessityLevel" type="number">
     <button type="submit">Submit</button>
   </form>
+</div>
+
+<div class="large-12 small-2 columns">
+  Coupon information from the Groupon Api will go here.
+  They can search for coupons, but it will also show suggestions based on what is in their budget.
 </div>
 
 <div id="budgetEditModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
