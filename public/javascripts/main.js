@@ -11,7 +11,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 }]);
 
 app.controller('mainCtrl', function($scope, $state, $http, stockInfoService){
-  $scope.portfolio='';
   return $http.get('http://localhost:3000/search').success(function(user) {
     console.log("user", user);
     $scope.currentUser = user.displayName;

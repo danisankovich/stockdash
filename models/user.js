@@ -4,7 +4,10 @@ var user = new mongoose.Schema({
   displayName: {type: String, required: true},
   email: {type : String, required: true},
   image: String,
-  portfolio: [],
+  moneyInStocks: Number,
+  additionalPayments: Number,
+  additionalIncomes: Number,
+  favoriteNewsSources: [],
 });
 
 module.exports  = mongoose.model('User', user);
