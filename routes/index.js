@@ -7,7 +7,6 @@ var Stock = require('../models/stock');
 var Budget = require('../models/budget');
 
 mongoose.connect('mongodb://localhost/stock-dash');
-// mongoose.connect('mongodb://localhost/sanky');
 
 router.get('/', function (req, res, next) {
   res.render('index', {user: req.user});
@@ -15,7 +14,6 @@ router.get('/', function (req, res, next) {
 
 router.get('/search', function(req, res, next) {
   User.findById(req.user._id, function(err, user) {
-  // User.findById("560791eb04972cda27e66cb7").exec(function(err, user) {
     res.json(req.user);
   });
 });
@@ -89,6 +87,15 @@ router.put('/budget/:id', function(req, res, next) {
     });
 });
 
+router.put('/budget/toggle/:id', function(req, res, next) {
+  Budget.findByIdAndUpdate(req.params.id,
+    {
+      isActive: req.body.active
+    }, {upsert: true}, function(err, saved) {
+      res.send(saved);
+    });
+});
+
 router.delete('/budget/:id', function(req, res, next) {
   Budget.findByIdAndRemove(req.params.id, function(err, saved) {
     res.send();
@@ -96,18 +103,19 @@ router.delete('/budget/:id', function(req, res, next) {
 });
 
 router.put('/stock/update', function(req, res, next) {
-  Stock.update(
-    {key1: "useless string"},
-    {$set: {key2: req.body.key2,
-            key3: req.body.key3}},
-    {upsert: true}, function(err, stock) {
-    res.send(stock);
-  });
+  Stock.findByIdAndUpdate(req.params.id,
+    {
+      target: req.body.target,
+      owned: req.body.owned,
+      shares: req.body.shares,
+    }, {upsert: true}, function(err, saved) {
+      res.send(saved);
+    });
 });
 
-router.delete('/stock/delete/:id', function(req, res, next) {
-  Stock.remove({"_id": req.params.id}, function(err, stock){
-    res.send(stock);
+router.delete('/stock/:id', function(req, res, next) {
+  Stock.findByIdAndRemove(req.params.id, function(err, saved) {
+    res.send();
   });
 });
 

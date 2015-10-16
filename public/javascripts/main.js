@@ -88,6 +88,19 @@ app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
       });
     };
 
+  $scope.toggleBudget = function(budget) {
+      $http.put('/budget/toggle/' + matchId, budget)
+      .success(function(response) {
+        if (response === 'fail'){
+          alert('Fail to edit ', 'Make sure year format is correct', 'error');
+        } else {
+          alert('Success', 'info updated.', 'success');
+        }
+      }).catch(function(err) {
+        console.log(err);
+      });
+    };
+
   $scope.deleteBudget = function(budget) {
       matchId = this.budget._id;
       $http.delete('/budget/' + matchId, budget)
