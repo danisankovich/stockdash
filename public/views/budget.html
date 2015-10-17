@@ -36,7 +36,7 @@
     </div>
     <div class="small-6 large-6 columns">
       <div class="box">
-        <h4>Monthly Salary: {{salary}}</h4>
+        <h4>Monthly Salary: {{user.salary}}</h4><a href="#" data-reveal-id="moneyEditModal" ng-click="openMoneyEdit()">Edit</a>
         <h4>Monthly Takehome: {{}}</h4>
         <h4>Remaining after Budget considerations: {{}}</h4>
         <h4>Additional Incomes: {{}}</h4>
@@ -73,6 +73,14 @@
     <input name="budgetName" ng-model="budget.budgetName" type = "text">
     <input name="monthlyPrice" ng-model="budget.monthlyPrice" type="number">
     <input name="necessityLevel" ng-model="budget.necessityLevel" type="number">
+    <button type="submit">Submit</button>
+  </form>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+<div id="moneyEditModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <h2 id="modalTitle">Edit Your Budget</h2>
+  <form ng-submit="editMoney(user)">
+    <input name="salary" ng-model="user.salary" type = "text">
     <button type="submit">Submit</button>
   </form>
   <a class="close-reveal-modal" aria-label="Close">&#215;</a>

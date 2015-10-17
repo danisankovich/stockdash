@@ -102,11 +102,8 @@ app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
     });
   };
   $scope.editMoney = function(user) {
-    console.log('adasg', user);
-    $http.put('/money/' + userIdentification, user)
+    $http.put('/money/' + $scope.user._id, user)
     .success(function(response) {
-      console.log('2', response);
-      // console.log('4', user);
       if (response === 'fail'){
         alert('Fail to edit ', 'Make sure year format is correct', 'error');
       } else {
