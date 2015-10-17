@@ -49,6 +49,7 @@ app.controller('aboutCtrl', function($scope, $state, $http){
 
 app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
   var matchName;
+  $scope.budgetCalc = 0;
 
   $(document).foundation();
 
@@ -57,6 +58,10 @@ app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
   $http.get('http://localhost:3000/budget').success(function(budget) {
     console.log("budget", budget);
     $scope.budgets = budget;
+    budget.forEach(function(e) {
+      $scope.budgetCalc += parseInt(e.monthlyPrice);
+    });
+    console.log($scope.budgetCalc);
   });
 
   $http.get('http://localhost:3000/user').success(function(user) {
