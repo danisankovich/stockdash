@@ -86,6 +86,14 @@ router.put('/budget/:id', function(req, res, next) {
       res.send(saved);
     });
 });
+router.put('/money/:id', function(req, res, next) {
+  User.findByIdAndUpdate(req.params.id,
+    {
+      salary: req.body.salary,
+    }, {upsert: true}, function(err, saved) {
+      res.send(saved);
+    });
+});
 
 router.put('/budget/toggle/:id', function(req, res, next) {
   Budget.findByIdAndUpdate(req.params.id,

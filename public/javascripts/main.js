@@ -48,9 +48,8 @@ app.controller('aboutCtrl', function($scope, $state, $http){
 });
 
 app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
-  var matchName;
   $scope.budgetCalc = 0;
-
+  var userIdentification;
   $(document).foundation();
 
   //  $scope.editId='';
@@ -66,7 +65,11 @@ app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
 
   $http.get('http://localhost:3000/user').success(function(user) {
     console.log("user", user);
+    $scope.user = user;
     $scope.currentUser = user.displayName;
+    $scope.salary = user.salary;
+    userIdentification = user._id;
+    console.log(userIdentification);
   });
 
   $scope.addBudget = function() {
@@ -79,46 +82,67 @@ app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
     $scope.necessityLevel = this.budget.necessityLevel;
     matchId = this.budget._id;
   };
+  $scope.openMoneyEdit = function() {
+    $scope.salary = $scope.user.salary;
+    matchId = $scope.user._id;
+    console.log(matchId);
+  };
 
   $scope.editBudget = function(budget) {
-      $http.put('/budget/' + matchId, budget)
-      .success(function(response) {
-        if (response === 'fail'){
-          alert('Fail to edit ', 'Make sure year format is correct', 'error');
-        } else {
-          alert('Success', 'info updated.', 'success');
-        }
-      }).catch(function(err) {
-        console.log(err);
-      });
-    };
+    console.log('asdg', budget);
+    $http.put('/budget/' + matchId, budget)
+    .success(function(response) {
+      if (response === 'fail'){
+        alert('Fail to edit ', 'Make sure year format is correct', 'error');
+      } else {
+        alert('Success', 'info updated.', 'success');
+      }
+    }).catch(function(err) {
+      console.log(err);
+    });
+  };
+  $scope.editMoney = function(user) {
+    console.log('adasg', user);
+    $http.put('/money/' + userIdentification, user)
+    .success(function(response) {
+      console.log('2', response);
+      // console.log('4', user);
+      if (response === 'fail'){
+        alert('Fail to edit ', 'Make sure year format is correct', 'error');
+      } else {
+        alert('Success', 'info updated.', 'success');
+      }
+    }).catch(function(err) {
+      console.log(err);
+    });
+  };
 
   $scope.toggleBudget = function(budget) {
-      $http.put('/budget/toggle/' + matchId, budget)
-      .success(function(response) {
-        if (response === 'fail'){
-          alert('Fail to edit ', 'Make sure year format is correct', 'error');
-        } else {
-          alert('Success', 'info updated.', 'success');
-        }
-      }).catch(function(err) {
-        console.log(err);
-      });
-    };
+    $http.put('/budget/toggle/' + matchId, budget)
+    .success(function(response) {
+      if (response === 'fail'){
+        alert('Fail to edit ', 'Make sure year format is correct', 'error');
+      } else {
+        alert('Success', 'info updated.', 'success');
+      }
+    }).catch(function(err) {
+      console.log(err);
+    });
+  };
 
   $scope.deleteBudget = function(budget) {
-      matchId = this.budget._id;
-      $http.delete('/budget/' + matchId, budget)
-      .success(function(response) {
-        if (response === 'fail'){
-          alert('Fail to delete ', 'Please Try Again', 'error');
-        } else {
-          alert('Success', 'info deleted.', 'success');
-        }
-      }).catch(function(err) {
-        console.log(err);
-      });
-    };
+    matchId = this.budget._id;
+    $http.delete('/budget/' + matchId, budget)
+    .success(function(response) {
+      if (response === 'fail'){
+        alert('Fail to delete ', 'Please Try Again', 'error');
+      } else {
+        alert('Success', 'info deleted.', 'success');
+      }
+    }).catch(function(err) {
+      console.log(err);
+    });
+  };
 });
 
 app.controller('searchCtrl', function($scope, $state, $http, addStockService){

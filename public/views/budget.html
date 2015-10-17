@@ -34,15 +34,16 @@
         </tr>
       </table>
     </div>
-    <!-- <div class="small-6 large-6 columns">
+    <div class="small-6 large-6 columns">
       <div class="box">
-        <h2>Monthly Salary: {{income}}</h2>
-        <h2>Monthly Takehome: {{Takehome}}</h2>
-        <h2>Remaining after Budget considerations: {{After considerations}}</h2>
-        <h2>Additional Incomes: {{Additional incomes}}</h2>
-        <h2>Additional Payments: {{Additional payments}}</h2>
+        <h4>Monthly Salary: {{salary}}</h4>
+        <h4>Monthly Takehome: {{}}</h4>
+        <h4>Remaining after Budget considerations: {{}}</h4>
+        <h4>Additional Incomes: {{}}</h4>
+        <h4>Additional Payments: {{}}</h4>
+        <button ng-click="openMoneyEdit()" data-reveal-id="moneyEditModal">Edit Info</button>
       </div>
-    </div> -->
+    </div>
   </div>
 </div>
 
@@ -51,6 +52,12 @@
     <input name="budgetName" ng-model="budget.budgetName" type = "text">
     <input name="monthlyPrice" ng-model="budget.monthlyPrice" type="number">
     <input name="necessityLevel" ng-model="budget.necessityLevel" type="number">
+    <button type="submit">Submit</button>
+  </form>
+</div>
+<div class="large-4 small-4 columns">
+  <form ng-submit="editMoney()">
+    <input name="salary" ng-model="user.salary" type = "text">
     <button type="submit">Submit</button>
   </form>
 </div>

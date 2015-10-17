@@ -7,6 +7,7 @@ var user = new mongoose.Schema({
   moneyInStocks: Number,
   additionalPayments: Number,
   additionalIncomes: Number,
+  salary: {type: Number, default: 0},
   favoriteNewsSources: [],
 });
 
