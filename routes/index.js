@@ -12,13 +12,13 @@ router.get('/', function (req, res, next) {
   res.render('index', {user: req.user});
 });
 
-router.get('/search', function(req, res, next) {
+router.get('/user', function(req, res, next) {
   User.findById(req.user._id, function(err, user) {
     res.json(req.user);
   });
 });
 
-router.get('/user', function(req, res, next) {
+router.get('/search', function(req, res, next) {
   User.findById(req.user._id, function(err, user) {
     res.json(req.user);
   });
@@ -51,41 +51,6 @@ router.get('/dashboard', function(req, res, next) {
   });
 });
 
-router.get('/budget', function(req, res, next) {
-  Budget.find({userId: req.user._id}, function(err, budget) {
-    res.send(budget);
-  });
-});
-
-
-router.post('/budget', function(req, res, next) {
-  User.findById(req.user._id, function(err, user){
-    Budget.create({
-      userId: req.user._id,
-      budgetName: req.body.budgetName,
-      monthlyPrice: req.body.monthlyPrice,
-      necessityLevel: req.body.necessityLevel,
-    }, function(err, budget){
-      if (!budget) {
-        res.send('fail');
-      }
-      if (budget) {
-        res.send();
-      }
-    });
-  });
-});
-
-router.put('/budget/:id', function(req, res, next) {
-  Budget.findByIdAndUpdate(req.params.id,
-    {
-      budgetName: req.body.budgetName,
-      monthlyPrice: req.body.monthlyPrice,
-      necessityLevel: req.body.necessityLevel
-    }, {upsert: true}, function(err, saved) {
-      res.send(saved);
-    });
-});
 router.put('/money/:id', function(req, res, next) {
   console.log("salary", req.body.salary);
   User.findByIdAndUpdate(req.params.id,
@@ -94,25 +59,18 @@ router.put('/money/:id', function(req, res, next) {
     }, {upsert: true}, function(err, user) {
       res.send(user);
     });
-
 });
-
-router.put('/budget/toggle/:id', function(req, res, next) {
-  Budget.findByIdAndUpdate(req.params.id,
+router.put('/takehome/:id', function(req, res, next) {
+  console.log("takehome", req.body.takehome);
+  User.findByIdAndUpdate(req.params.id,
     {
-      isActive: req.body.active
-    }, {upsert: true}, function(err, saved) {
-      res.send(saved);
+      takehome: req.body.takehome,
+    }, {upsert: true}, function(err, user) {
+      res.send(user);
     });
 });
 
-router.delete('/budget/:id', function(req, res, next) {
-  Budget.findByIdAndRemove(req.params.id, function(err, saved) {
-    res.send();
-  });
-});
-
-router.put('/stock/update', function(req, res, next) {
+router.put('/stock/update/:id', function(req, res, next) {
   Stock.findByIdAndUpdate(req.params.id,
     {
       target: req.body.target,

@@ -22,13 +22,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(passport.session());
 app.use(session({secret:'codinghouse', resave: true, saveUninitialized: true}));
 
 require('./config/passport')(app);
 
 app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
+app.use('/budget', require('./routes/budget'));
 
 var logout = function(req, res){
   if (req.isAuthenticated()){

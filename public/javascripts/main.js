@@ -10,7 +10,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   .state('budget', { url: '/budget', templateUrl: 'views/budget.html', controller: 'budgetCtrl' });
 }]);
 
-app.controller('mainCtrl', function($scope, $state, $http, stockInfoService){
+app.controller('mainCtrl', function($scope, $state, $http){
   return $http.get('http://localhost:3000/search').success(function(user) {
     console.log("user", user);
     $scope.currentUser = user.displayName;
@@ -88,6 +88,11 @@ app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
     matchId = $scope.user._id;
     console.log(matchId);
   };
+  $scope.openTakehomeEdit = function() {
+    $scope.takehome = $scope.user.takehome;
+    // matchId = $scope.user._id;
+    // console.log(matchId);
+  };
 
   $scope.editBudget = function(budget) {
     console.log('asdg', budget);
@@ -110,6 +115,18 @@ app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
         alert('Fail to edit ', 'Make sure year format is correct', 'error');
       } else {
         alert('Success', 'info updated.', 'success');
+      }
+    }).catch(function(err) {
+      console.log(err);
+    });
+  };
+  $scope.editTakehome = function(user) {
+    $http.put('/takehome/' + $scope.user._id, user)
+    .success(function(response) {
+      if (response === 'fail'){
+        alert('Fail to edit takehome', 'Make sure year format is correct', 'error');
+      } else {
+        alert('Success', 'takehome updated.', 'success');
       }
     }).catch(function(err) {
       console.log(err);
@@ -229,5 +246,3 @@ app.service('stockInfoService', function($http, $stateParams, $state) {
     $http.jsonp("http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol="+$scope.stockInfo[0].Symbol+"&callback=JSON_CALLBACK");
   };
 });
-// lookup by ticker or name: probably have to use %20 or whatever for multi-word companies
-// "http://dev.markitondemand.com/Api/v2/Lookup/jsonp?input="+company ticker or name+"&callback=myFunction"

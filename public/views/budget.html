@@ -41,28 +41,24 @@
           <th>Monthly Salary</th>
           <th>Monthly Takehome</th>
           <th>Monthly Remaining</th>
-          <th>Additional Incomes</th>
-          <th>Additional Payments</th>
+          <th>Money in Stocks</th>
+          <th>Additional Incomes</th> <!-- This will be a push into an array or
+            maybe its own schema? Upon user creation, an additional income and
+            payment schema are created as well. Linked by userID, which is equal
+            to user._id. each item in these arrays is an object with source: value
+            and ammount: value-->
+          <th>Additional Payments</th> <!-- This will be a push into an array -->
         </tr>
         <tr>
           <td>$<a href="#" data-reveal-id="moneyEditModal" ng-click="openMoneyEdit()">{{user.salary}}</a></td>
-          <td>${{user.takehome}}</td>
-          <td>{{}}</td>
+          <td>$<a href="#" data-reveal-id="takehomeEditModal" ng-click="openMoneyEdit()">{{user.takehome}}</a></td>
+          <td>${{user.takehome - budgetCalc}}</td>   <!-- do some jquery magic to make this red if negative -->
+          <td>Money in Stocks</td>
           <td><a href="#" data-reveal-id="budgetEditModal" ng-click="openEdit()">Edit</a></td>
           <td><button ng-click="deleteBudget()">Delete</button></td>
         </tr>
       </table>
     </div>
-    <!-- <div class="small-6 large-6 columns">
-      <div class="box">
-        <h4>Monthly Salary: {{user.salary}}</h4><a href="#" data-reveal-id="moneyEditModal" ng-click="openMoneyEdit()">Edit</a>
-        <h4>Monthly Takehome: {{}}</h4>
-        <h4>Remaining after Budget considerations: {{}}</h4>
-        <h4>Additional Incomes: {{}}</h4>
-        <h4>Additional Payments: {{}}</h4>
-        <button ng-click="openMoneyEdit()" data-reveal-id="moneyEditModal">Edit Info</button>
-      </div>
-    </div> -->
   </div>
 </div>
 
@@ -80,6 +76,7 @@
   They can search for coupons, but it will also show suggestions based on what is in their budget.
 </div>
 
+<!-- Modals lie below -->
 <div id="budgetEditModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
   <h2 id="modalTitle">Edit Your Budget</h2>
   <form ng-submit="editBudget(budget)">
@@ -90,9 +87,17 @@
   </form>
 </div>
 <div id="moneyEditModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-  <h2 id="modalTitle">Edit Your Budget</h2>
+  <h2 id="modalTitle">Edit Your Salary</h2>
   <form ng-submit="editMoney(user)">
     <input name="salary" ng-model="user.salary" type = "text">
+    <button type="submit">Submit</button>
+  </form>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+<div id="takehomeEditModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <h2 id="modalTitle">Edit Your Takehome</h2>
+  <form ng-submit="editTakehome(user)">
+    <input name="takehome" ng-model="user.takehome" type = "text">
     <button type="submit">Submit</button>
   </form>
   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
