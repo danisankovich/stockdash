@@ -8,6 +8,7 @@ var user = new mongoose.Schema({
   additionalPayments: Number,
   additionalIncomes: Number,
   salary: {type: Number, default: 0},
+  takehome: {type: Number, default: 0},
   favoriteNewsSources: [],
 });
 

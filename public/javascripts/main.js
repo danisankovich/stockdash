@@ -68,6 +68,7 @@ app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
     $scope.user = user;
     $scope.currentUser = user.displayName;
     $scope.salary = user.salary;
+    $scope.takehome = user.takehome;
     userIdentification = user._id;
     console.log(userIdentification);
   });

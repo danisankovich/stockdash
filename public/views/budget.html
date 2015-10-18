@@ -35,6 +35,25 @@
       </table>
     </div>
     <div class="small-6 large-6 columns">
+      <h4>Click items to edit</h4>
+      <table>
+        <tr>
+          <th>Monthly Salary</th>
+          <th>Monthly Takehome</th>
+          <th>Monthly Remaining</th>
+          <th>Additional Incomes</th>
+          <th>Additional Payments</th>
+        </tr>
+        <tr>
+          <td>$<a href="#" data-reveal-id="moneyEditModal" ng-click="openMoneyEdit()">{{user.salary}}</a></td>
+          <td>${{user.takehome}}</td>
+          <td>{{}}</td>
+          <td><a href="#" data-reveal-id="budgetEditModal" ng-click="openEdit()">Edit</a></td>
+          <td><button ng-click="deleteBudget()">Delete</button></td>
+        </tr>
+      </table>
+    </div>
+    <!-- <div class="small-6 large-6 columns">
       <div class="box">
         <h4>Monthly Salary: {{user.salary}}</h4><a href="#" data-reveal-id="moneyEditModal" ng-click="openMoneyEdit()">Edit</a>
         <h4>Monthly Takehome: {{}}</h4>
@@ -43,7 +62,7 @@
         <h4>Additional Payments: {{}}</h4>
         <button ng-click="openMoneyEdit()" data-reveal-id="moneyEditModal">Edit Info</button>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
