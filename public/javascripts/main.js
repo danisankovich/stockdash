@@ -101,6 +101,7 @@ app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
       console.log(err);
     });
   };
+
   $scope.editMoney = function(user) {
     $http.put('/money/' + $scope.user._id, user)
     .success(function(response) {
