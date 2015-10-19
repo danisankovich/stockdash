@@ -45,7 +45,7 @@ router.post('/search', function(req, res, next) {
   });
 });
 
-router.get('/dashboard', function(req, res, next) {
+router.get('/portfolio', function(req, res, next) {
   Stock.find({userId: req.user._id}, function(err, stocks) {
     res.send(stocks);
   });

@@ -4,7 +4,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
   $urlRouterProvider.otherwise('/');
   $stateProvider
   .state('/', { url: '/', templateUrl: 'views/home.html', controller: 'mainCtrl' })
-  .state('dashboard', { url: '/dashboard', templateUrl: 'views/dashboard.html', controller: 'dashboardCtrl' })
+  .state('portfolio', { url: '/portfolio', templateUrl: 'views/portfolio.html', controller: 'portfolioCtrl' })
   .state('news', { url: '/news', templateUrl: 'views/news.html' })
   .state('search', { url: '/search', templateUrl: 'views/search.html', controller: 'searchCtrl' })
   .state('budget', { url: '/budget', templateUrl: 'views/budget.html', controller: 'budgetCtrl' });
@@ -17,38 +17,37 @@ app.controller('mainCtrl', function($scope, $state, $http){
   });
 });
 
-app.controller('dashboardCtrl', function($scope, $state, $http, stockInfoService, $timeout){
+app.controller('portfolioCtrl', function($scope, $state, $http, stockInfoService, $timeout){
   $scope.stocks='';
+  $scope.moneySpentOnStocks = 0;
+  $scope.currentStockValue = 0;
 
   $http.get('http://localhost:3000/user').success(function(user) {
-    console.log("user", user);
     $scope.currentUser = user.displayName;
   });
 
-  $http.get('http://localhost:3000/dashboard').success(function(stocks) {
-    console.log("stocks", stocks);
-    // $scope.currentUser = user.displayName;
+  $http.get('http://localhost:3000/portfolio').success(function(stocks) {
     $scope.stocks = stocks;
-    // $scope.currentPrice='';
   });
   $scope.showStockInfo = function() {
-    console.log(this.stock);
     $http.jsonp("http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol=" + this.stock.symbol + "&callback=JSON_CALLBACK")
     .success(function(data) {
       $scope.currentPrice = data.LastPrice;
+      console.log($scope.currentPrice);
     });
   };
 });
 
 app.controller('aboutCtrl', function($scope, $state, $http){
   return $http.get('http://localhost:3000/search').success(function(user) {
-    console.log("user", user);
     $scope.currentUser = user.displayName;
   });
 });
 
 app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
   $scope.budgetCalc = 0;
+  $scope.moneySpentOnStocks = 0;
+  $scope.currentStockValue = 0;
   var userIdentification;
   $(document).foundation();
 
@@ -71,6 +70,17 @@ app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
     $scope.takehome = user.takehome;
     userIdentification = user._id;
     console.log(userIdentification);
+  });
+  $http.get('http://localhost:3000/portfolio').success(function(stocks) {
+    $scope.stocks = stocks;
+    stocks.forEach(function(e) {
+      $scope.moneySpentOnStocks += Number(e.PAP)*Number(e.shares);
+    });
+    stocks.forEach(function(e) {
+      Number($http.jsonp("http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol=" + e.symbol + "&callback=JSON_CALLBACK").success(function(data){
+         $scope.currentStockValue += data.LastPrice*e.shares;
+      }));
+    });
   });
 
   $scope.addBudget = function() {

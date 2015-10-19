@@ -1,7 +1,8 @@
-<h1>{{currentUser}}'s Budget</h1>
-
 <div class="row">
   <div class="small-12 columns">
+    <div class="small-6 small-centered columns">
+      <h1>{{currentUser}}'s Budget</h1>
+    </div>
     <div class="small-6 large-6 columns">
       <table>
         <tr>
@@ -41,7 +42,6 @@
           <th>Monthly Salary</th>
           <th>Monthly Takehome</th>
           <th>Monthly Remaining</th>
-          <th>Money in Stocks</th>
           <th>Additional Incomes</th> <!-- This will be a push into an array or
             maybe its own schema? Upon user creation, an additional income and
             payment schema are created as well. Linked by userID, which is equal
@@ -53,11 +53,16 @@
           <td>$<a href="#" data-reveal-id="moneyEditModal" ng-click="openMoneyEdit()">{{user.salary}}</a></td>
           <td>$<a href="#" data-reveal-id="takehomeEditModal" ng-click="openMoneyEdit()">{{user.takehome}}</a></td>
           <td>${{user.takehome - budgetCalc}}</td>   <!-- do some jquery magic to make this red if negative -->
-          <td>Money in Stocks</td>
           <td><a href="#" data-reveal-id="budgetEditModal" ng-click="openEdit()">Edit</a></td>
           <td><button ng-click="deleteBudget()">Delete</button></td>
         </tr>
       </table>
+      <div class="large-8 small-8 medium-8 columns">
+        <ul>
+          <li>Money Spent on Stocks: ${{moneySpentOnStocks}}</li><br>
+          <li>Total Stocks Value: ${{currentStockValue}}</li>
+        </ul>
+      </div>
     </div>
   </div>
 
