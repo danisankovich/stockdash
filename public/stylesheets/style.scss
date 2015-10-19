@@ -1,0 +1,28 @@
+
+a {
+  color: #00B7FF;
+}
+
+li {
+  display: inline-block;
+}
+
+th {
+  background-color: #DCDCDC;
+  border: 1px black solid;
+}
+tr {
+  td {
+    border-bottom: black 1px solid;
+    border-right: black 1px solid;
+    border-left: black 1px solid;
+    background-color: #F5F5F5;
+  }
+}
+
+tr:hover {
+  td {
+    background-color: #D3D3D3;
+    cursor: pointer;
+  }
+}

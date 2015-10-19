@@ -60,13 +60,20 @@
       </table>
     </div>
   </div>
-</div>
 
 <div class="large-4 small-4 columns">
+  <h3>Add To Budget list</h3>
   <form ng-submit="addBudget()">
-    <input name="budgetName" ng-model="budget.budgetName" type = "text">
-    <input name="monthlyPrice" ng-model="budget.monthlyPrice" type="number">
-    <input name="necessityLevel" ng-model="budget.necessityLevel" type="number">
+    <input name="budgetName" ng-model="budget.budgetName" type = "text" placeholder="Item">
+    <input name="monthlyPrice" ng-model="budget.monthlyPrice" type="number" placeholder="Cost Per Month">
+    <select name="necessityLevel" ng-model="budget.necessityLevel" type="number" placeholder="Necessity Level">
+      <option value="" disabled selected>Necessity Level (1 not important. 5 Very important)</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
     <button type="submit">Submit</button>
   </form>
 </div>
@@ -75,6 +82,7 @@
   Coupon information from the Groupon Api will go here.
   They can search for coupons, but it will also show suggestions based on what is in their budget.
 </div>
+</div>
 
 <!-- Modals lie below -->
 <div id="budgetEditModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
@@ -82,7 +90,14 @@
   <form ng-submit="editBudget(budget)">
     <input name="budgetName" ng-model="budget.budgetName" type = "text">
     <input name="monthlyPrice" ng-model="budget.monthlyPrice" type="number">
-    <input name="necessityLevel" ng-model="budget.necessityLevel" type="number">
+    <select name="necessityLevel" ng-model="budget.necessityLevel" type="number" placeholder="Necessity Level">
+      <option value="" disabled selected>Necessity Level</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
     <button type="submit">Submit</button>
   </form>
 </div>
