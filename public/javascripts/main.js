@@ -1,15 +1,3 @@
-var app = angular.module('StockDash', ['ui.router']);
-
-app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/');
-  $stateProvider
-  .state('/', { url: '/', templateUrl: 'views/home.html', controller: 'mainCtrl' })
-  .state('portfolio', { url: '/portfolio', templateUrl: 'views/portfolio.html', controller: 'portfolioCtrl' })
-  .state('news', { url: '/news', templateUrl: 'views/news.html' })
-  .state('search', { url: '/search', templateUrl: 'views/search.html', controller: 'searchCtrl' })
-  .state('budget', { url: '/budget', templateUrl: 'views/budget.html', controller: 'budgetCtrl' });
-}]);
-
 app.controller('mainCtrl', function($scope, $state, $http){
   return $http.get('http://localhost:3000/search').success(function(user) {
     console.log("user", user);
@@ -19,6 +7,7 @@ app.controller('mainCtrl', function($scope, $state, $http){
 
 app.controller('portfolioCtrl', function($scope, $state, $http, stockInfoService, $timeout){
   $scope.stocks='';
+  // $scope.clicked = false;
   $scope.moneySpentOnStocks = 0;
   $scope.currentStockValue = 0;
 
@@ -33,7 +22,9 @@ app.controller('portfolioCtrl', function($scope, $state, $http, stockInfoService
     $http.jsonp("http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol=" + this.stock.symbol + "&callback=JSON_CALLBACK")
     .success(function(data) {
       $scope.currentPrice = data.LastPrice;
-      console.log($scope.currentPrice);
+      $scope.thisCompany = data.Name;
+      $scope.thisSymbol = data.Symbol;
+      return $scope.clicked = true;
     });
   };
 });
@@ -50,8 +41,6 @@ app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
   $scope.currentStockValue = 0;
   var userIdentification;
   $(document).foundation();
-
-  //  $scope.editId='';
 
   $http.get('http://localhost:3000/budget').success(function(budget) {
     console.log("budget", budget);
@@ -100,8 +89,6 @@ app.controller('budgetCtrl', function($scope, $state, $http, addStockService){
   };
   $scope.openTakehomeEdit = function() {
     $scope.takehome = $scope.user.takehome;
-    // matchId = $scope.user._id;
-    // console.log(matchId);
   };
 
   $scope.editBudget = function(budget) {
@@ -223,36 +210,4 @@ app.controller('searchCtrl', function($scope, $state, $http, addStockService){
     console.log("user", user);
     $scope.currentUser = user.displayName;
   });
-});
-
-app.service('addStockService', function($http, $stateParams, $state) {
-  this.addStock = function(stock) {
-    $http.post('/search', stock)
-    .success(function(response) {
-      if (response === 'fail') {
-        alert('Fail to add Stock. ');
-      } else {
-        alert('Successfully added stock');
-      }
-    }).catch(function(err) {
-      console.log(err);
-    });
-  };
-  this.addBudget = function(budget) {
-    $http.post('/budget', budget)
-    .success(function(response) {
-      if (response === 'fail') {
-        alert('Fail to add budget item. ');
-      } else {
-        alert('Successfully added budget item');
-      }
-    }).catch(function(err) {
-      console.log(err);
-    });
-  };
-});
-app.service('stockInfoService', function($http, $stateParams, $state) {
-  this.stockInfo=function() {
-    $http.jsonp("http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol="+$scope.stockInfo[0].Symbol+"&callback=JSON_CALLBACK");
-  };
 });
