@@ -74,7 +74,7 @@ router.put('/stock/update/:id', function(req, res, next) {
   Stock.findByIdAndUpdate(req.params.id,
     {
       target: req.body.target,
-      owned: req.body.owned,
+      owned: req.body.owned,//if this is false, remember to keep shares as disabled
       shares: req.body.shares,
     }, {upsert: true}, function(err, saved) {
       res.send(saved);

@@ -41,6 +41,30 @@ router.put('/:id', function(req, res, next) {
       res.send(saved);
     });
 });
+// router.put('/:id/name', function(req, res, next) {
+//   Budget.findByIdAndUpdate(req.params.id,
+//     {
+//       budgetName: req.body.budgetName,
+//     }, {upsert: true}, function(err, saved) {
+//       res.send(saved);
+//     });
+// });
+// router.put('/:id/cost', function(req, res, next) {
+//   Budget.findByIdAndUpdate(req.params.id,
+//     {
+//       monthlyPrice: req.body.monthlyPrice,
+//     }, {upsert: true}, function(err, saved) {
+//       res.send(saved);
+//     });
+// });
+// router.put('/:id/cost/necessity', function(req, res, next) {
+//   Budget.findByIdAndUpdate(req.params.id,
+//     {
+//       necessityLevel: req.body.necessityLevel
+//     }, {upsert: true}, function(err, saved) {
+//       res.send(saved);
+//     });
+// });
 
 router.put('/toggle/:id', function(req, res, next) {
   Budget.findByIdAndUpdate(req.params.id,
