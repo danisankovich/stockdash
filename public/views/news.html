@@ -1,23 +1,27 @@
-<div class="container">
-  <div class="row">
-    <p>Hello news page</p>
-  </div>
-</div>
-<div>
-  <div class="container">
-    <div class="row">
-      <div class="small-12 columns">
-        News Feeds: This will be more National news. Happenings, politics, etc. Home Country 
-      </div>
-      <div class="small-12 columns">
-        News Feeds: This will be more World news.
-      </div>
-      <div class="small-12 columns">
-        News Feeds: This will be more financial news. Home Country.
-      </div>
-      <div class="small-12 columns">
-        News Feeds: This will be more financial news. World.
-      </div>
+<div class="row">
+  <br>
+  <br>
+  <div class="large-12 large-centered small-12 small-centered">
+    <div id='results'>
+
     </div>
   </div>
 </div>
+
+
+  <script type='text/javascript'>
+    function top_stories(o){
+      var items = o.query.results.item;
+      var output = '';
+      var no_items=items.length;
+      for(var i=0;i<no_items;i++){
+        var title = items[i].title;
+        var link = items[i].link;
+        var desc = items[i].description;
+        output += "<h3><a href='" + link + "'>"+title+"</a></h3>" + desc + "<hr/>";
+      }
+      // Place news stories in div tag
+      document.getElementById('results').innerHTML = output;
+    }
+    </script>
+  <script src='http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20rss%20where%20url%3D%22http%3A%2F%2Frss.news.yahoo.com%2Frss%2Ftopstories%22&format=json&callback=top_stories'></script>

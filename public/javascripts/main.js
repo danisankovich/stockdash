@@ -4,6 +4,10 @@ app.controller('mainCtrl', function($scope, $state, $http){
     $scope.currentUser = user.displayName;
   });
 });
+app.controller('newsCtrl', function($scope, $state, $http){
+
+
+});
 
 app.controller('portfolioCtrl', function($scope, $state, $http, stockInfoService, $timeout){
   $scope.stocks='';
